@@ -34,6 +34,38 @@ module.exports = {
 }
 ```
 
+### Querying multiple groups
+
+To get data from multiple Groups, you can define the plugin multiple times:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-meetup`,
+      options: {
+        key: process.env.MEETUP_API_KEY,
+        groupUrlName: "jamstack-paris",
+        status: "past",
+        desc: "true",
+        page: 10
+      },
+    },
+    {
+      resolve: `gatsby-source-meetup`,
+      options: {
+        key: process.env.MEETUP_API_KEY,
+        groupUrlName: "paris-js",
+        status: "upcoming,past",
+        desc: "true",
+        page: 10
+      },
+    },
+  ],
+}
+```
+
 ## How to query
 
 You can query the Group node and associated Event nodes created from Meetup like the following:
@@ -41,7 +73,7 @@ You can query the Group node and associated Event nodes created from Meetup like
 ```graphql
 {
   meetupGroup {
-    childrenMeetupEvent {
+    events {
       name
       created
       duration
