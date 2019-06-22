@@ -11,17 +11,16 @@ exports.sourceNodes = (
   delete configOptions.plugins
 
   // Processes a Meetup Group
-  const processGroup = (group) => {
-    const nodeId = createNodeId(`meetup-group-${group.id}`);
-    const nodeContent = JSON.stringify(group)
+  const processGroup = group => {
+    const nodeId = createNodeId(`meetup-group-${group.id}`)
 
     const nodeData = Object.assign({}, group, {
+      ...group,
       id: nodeId,
       parent: null,
       children: [],
       internal: {
         type: `MeetupGroup`,
-        content: nodeContent,
         contentDigest: createContentDigest(group),
       },
     })
@@ -31,16 +30,15 @@ exports.sourceNodes = (
 
   // Processes a Meetup Event as a child of a Meetup Group
   const processEvent = (event, parent) => {
-    const nodeId = createNodeId(`meetup-event-${event.id}`);
-    const nodeContent = JSON.stringify(event)
+    const nodeId = createNodeId(`meetup-event-${event.id}`)
 
     const nodeData = Object.assign({}, event, {
+      ...event,
       id: nodeId,
       parent,
       children: [],
       internal: {
         type: `MeetupEvent`,
-        content: nodeContent,
         contentDigest: createContentDigest(event),
       },
     })
@@ -60,17 +58,19 @@ exports.sourceNodes = (
     // Fetch a response from the apiUrl
     Promise.all([fetch(apiGroupUrl), fetch(apiEventsUrl)])
       // Parse the response as JSON
-      .then(responses => Promise.all(responses.map((response) => response.json())))
+      .then(responses =>
+        Promise.all(responses.map(response => response.json()))
+      )
       // Process the JSON data into a node
       .then(dataArray => {
         const groupData = dataArray[0]
         const eventData = dataArray[1]
         // For each query result (or 'hit')
         let groupNode = processGroup(groupData)
-        Object.values(eventData).forEach(event => {
+        groupNode.events___NODE = Object.values(eventData).map(event => {
           const nodeData = processEvent(event, groupNode.id)
-          groupNode.children.push(nodeData.id)
           createNode(nodeData)
+          return nodeData.id
         })
         createNode(groupNode)
       })
