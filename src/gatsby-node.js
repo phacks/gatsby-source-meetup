@@ -48,9 +48,9 @@ exports.sourceNodes = (
     return nodeData
   }
 
-  const { groupUrlName, ...apiOpstions } = configOptions
+  const { groupUrlName, ...apiOptions } = configOptions
   // Convert the options object into a query string
-  const queryStringOptions = queryString.stringify(apiOpstions)
+  const queryStringOptions = queryString.stringify(apiOptions)
 
   const apiGroupUrl = `https://api.meetup.com/${groupUrlName}?${queryStringOptions}`
   const apiEventsUrl = `https://api.meetup.com/${groupUrlName}/events?${queryStringOptions}`
