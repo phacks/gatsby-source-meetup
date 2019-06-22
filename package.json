@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-meetup",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Gatsby source plugin for building websites using the Meetup.com API as a data source",
   "bugs": {
     "url": "https://github.com/phacks/gatsby-source-meetup/issues"
