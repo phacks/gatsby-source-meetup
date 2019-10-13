@@ -35,6 +35,7 @@ exports.sourceNodes = (
     const nodeData = Object.assign({}, event, {
       ...event,
       id: nodeId,
+      meetupId: event.id,
       parent,
       children: [],
       internal: {
