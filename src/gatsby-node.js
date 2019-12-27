@@ -47,25 +47,37 @@ exports.sourceNodes = (
     return nodeData
   }
 
-  const { groupUrlName, ...apiOptions } = configOptions
+  const { groupUrlName, eventsOptions: paramEventsOptions, ...apiOptions } = configOptions
+  const eventsOptions = paramEventsOptions?paramEventsOptions:[apiOptions];
+
   // Convert the options object into a query string
   const queryStringOptions = queryString.stringify(apiOptions)
 
-  const apiGroupUrl = `https://api.meetup.com/${groupUrlName}?${queryStringOptions}`
-  const apiEventsUrl = `https://api.meetup.com/${groupUrlName}/events?${queryStringOptions}`
+  const apiGroupUrl = `https://api.meetup.com/${groupUrlName}?${queryStringOptions}`; // Convert the options object into a query string
+
+  const allApiEventsUrl = eventsOptions.map(eventApiOptions => {
+    // Convert the options object into a query string
+    const queryStringEventOptions = queryString.stringify(eventApiOptions)
+    return `https://api.meetup.com/${groupUrlName}/events?${queryStringEventOptions}`;
+  });
+
+  const allApiUrls = [
+    apiGroupUrl,
+    ...allApiEventsUrl
+  ];
 
   // Gatsby expects sourceNodes to return a promise
   return (
     // Fetch a response from the apiUrl
-    Promise.all([fetch(apiGroupUrl), fetch(apiEventsUrl)])
+    Promise.all(allApiUrls.map(url => fetch(url)))
       // Parse the response as JSON
       .then(responses =>
         Promise.all(responses.map(response => response.json()))
       )
       // Process the JSON data into a node
       .then(dataArray => {
-        const groupData = dataArray[0]
-        const eventData = dataArray[1]
+        const [groupData, ...eventsDataSeparated] = dataArray;
+        const eventData = eventsDataSeparated.reduce((acc, events) => ([...acc, ...events]), []);
         // For each query result (or 'hit')
         let groupNode = processGroup(groupData)
         groupNode.events___NODE = Object.values(eventData).map(event => {
