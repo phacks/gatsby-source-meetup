@@ -1,6 +1,46 @@
 const fetch = require("node-fetch")
 const queryString = require("query-string")
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  const typeDefs = `
+    scalar Long
+    type MeetupEventVenue {
+      address_1: String
+      address_2: String
+      city: String!
+      country: String!
+      lat: Float!
+      localized_country_name: String!
+      lon: Float!
+      name: String!
+      repinned: Boolean!
+      state: String
+      zip: String
+    }
+    type MeetupEvent implements Node {
+      id: ID!
+      status: String!
+      visibility: String
+      created: Long
+      description: String!
+      name: String!
+      venue: MeetupEventVenue
+      time: Long!
+      utc_offset: Int!
+      updated: Long!
+      rsvp_limit: Int
+      member_pay_fee: Boolean!
+      local_time: String!
+      link: String!
+      how_to_find_us: String
+      duration: Int!
+      date_in_series_pattern: Boolean!
+    }
+  `;
+  createTypes(typeDefs);
+};
+
 exports.sourceNodes = (
   { actions, createNodeId, createContentDigest },
   configOptions
@@ -77,3 +117,4 @@ exports.sourceNodes = (
       })
   )
 }
+
