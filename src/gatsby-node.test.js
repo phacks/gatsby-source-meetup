@@ -107,6 +107,24 @@ describe('sourceNodes', ()=>{
     expect(createNode).toBeCalledTimes(2);
   });
 
+  it('eventsOptions parameter with null value', async () => {
+    const configOptionsToTest = {
+      groupUrlName,
+      status: `upcoming,past`,
+      desc: `true`,
+      page: 10,
+      eventsOptions: null,
+    };
+    const configOptions = {
+      ...configOptionsToTest,
+      plugins: 'it must be removed'
+    }
+    await sourceNodes(context, configOptions);
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(createContentDigest).toHaveBeenCalledTimes(2);
+    expect(createNode).toBeCalledTimes(2);
+  });
+  
   it('eventsOptions parameter with empty array', async () => {
     const configOptionsToTest = {
       groupUrlName,
