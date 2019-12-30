@@ -34,6 +34,8 @@ module.exports = {
 }
 ```
 
+Also there is a optional option eventsOptions, read the section 'eventsOptions' to know how to used it.
+
 ### Querying multiple groups
 
 To get data from multiple Groups, you can define the plugin multiple times:
@@ -65,6 +67,42 @@ module.exports = {
   ],
 }
 ```
+
+### Querying events with multiple options
+
+To get data from the same Group with multiple options, you can use parameter optional eventsOptions:
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-meetup`,
+      options: {
+        apiKey: process.env.MEETUP_API_KEY,
+        groupUrlName: "jamstack-paris",
+        status: "past",
+        desc: "true",
+        page: 10,
+        eventsOptions: [
+          {
+            status: `upcoming`,
+            desc: `true`,
+            page: 1,
+          },
+          {
+            status: `past`,
+            desc: `true`,
+            page: 5,
+          }
+        ],
+      },
+    },
+  ],
+}
+```
+
+With eventsOptions used above, you get the first next event from today and the last 5 events.
 
 ## How to query
 
