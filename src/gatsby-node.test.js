@@ -124,7 +124,7 @@ describe('sourceNodes', ()=>{
     expect(createContentDigest).toHaveBeenCalledTimes(2);
     expect(createNode).toBeCalledTimes(2);
   });
-  
+
   it('eventsOptions parameter with empty array', async () => {
     const configOptionsToTest = {
       groupUrlName,
@@ -151,7 +151,7 @@ describe('sourceNodes', ()=>{
       page: 10,
       eventsOptions: [{
         status: `upcoming`,
-        desc: `true`,
+        desc: `false`,
         page: 1,
       }],
     };
@@ -186,7 +186,7 @@ describe('sourceNodes', ()=>{
       eventsOptions: [
         {
           status: `upcoming`,
-          desc: `true`,
+          desc: `false`,
           page: 1,
         },
         {
