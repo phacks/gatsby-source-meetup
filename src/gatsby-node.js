@@ -53,7 +53,7 @@ exports.sourceNodes = (
   // Convert the options object into a query string
   const queryStringOptions = queryString.stringify(apiOptions)
 
-  const apiGroupUrl = `https://api.meetup.com/${groupUrlName}?${queryStringOptions}`; // Convert the options object into a query string
+  const apiGroupUrl = `https://api.meetup.com/${groupUrlName}?${queryStringOptions}`;
 
   const allApiEventsUrl = eventsOptions.map(eventApiOptions => {
     // Convert the options object into a query string
