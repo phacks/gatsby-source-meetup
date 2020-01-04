@@ -69,7 +69,7 @@ exports.sourceNodes = (
   // Gatsby expects sourceNodes to return a promise
   return (
     // Fetch a response from the apiUrl
-    Promise.all(allApiUrls.map(fetch))
+    Promise.all(allApiUrls.map(url => fetch(url))
       // Parse the response as JSON
       .then(responses =>
         Promise.all(responses.map(response => response.json()))
