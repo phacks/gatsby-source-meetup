@@ -70,7 +70,7 @@ module.exports = {
 
 ### Querying events with multiple options
 
-To get data from the same Group with multiple options, you can use parameter optional eventsOptions:
+To get data from the same Group with multiple options (sorting, number of events…) depending on their status, you can use the optional parameter `eventsOptions`:
 
 ```javascript
 // In your gatsby-config.js
