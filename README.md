@@ -34,7 +34,6 @@ module.exports = {
 }
 ```
 
-Also there is a optional option eventsOptions, read the section 'eventsOptions' to know how to used it.
 
 ### Querying multiple groups
 
