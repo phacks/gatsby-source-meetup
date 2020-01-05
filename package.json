@@ -37,6 +37,6 @@
     "jest": "^24.9.0"
   },
   "peerDependencies": {
-    "gatsby": "^2.10.0"
+    "gatsby": ">= 2.12.0"
   }
 }
