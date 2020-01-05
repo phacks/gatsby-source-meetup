@@ -34,7 +34,6 @@ module.exports = {
 }
 ```
 
-
 ### Querying multiple groups
 
 To get data from multiple Groups, you can define the plugin multiple times:
