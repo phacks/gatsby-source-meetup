@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import {sourceNodes} from './gatsby-node';
+import { sourceNodes, createSchemaCustomization } from './gatsby-node';
 
 jest.mock('node-fetch');
 
@@ -228,5 +228,13 @@ describe('sourceNodes', ()=>{
         contentDigest: 'contentDigest return',
       },
     });
+  });
+})
+describe('createSchemaCustomization', ()=>{
+  it('simple call', async () => {
+    const createTypes = jest.fn();
+    await createSchemaCustomization({ actions: { createTypes } });
+    expect(createTypes).toHaveBeenCalledTimes(1);
+    expect(createTypes).toHaveBeenCalledWith(expect.any(String));
   });
 })
