@@ -38,7 +38,7 @@ beforeEach(()=>{
       return Promise.resolve({json:()=>Promise.resolve(groupData)});
     } else if(url === `https://api.meetup.com/${groupUrlName}/events?desc=true&page=10&status=upcoming%2Cpast`){
       return Promise.resolve({json:()=>Promise.resolve([ eventDataFromGroupConfig ])});
-    } else if(url === `https://api.meetup.com/${groupUrlName}/events?desc=true&page=1&status=upcoming`){
+    } else if(url === `https://api.meetup.com/${groupUrlName}/events?desc=false&page=1&status=upcoming`){
       return Promise.resolve({json:()=>Promise.resolve([ eventDataUpcoming ])});
     } else if(url === `https://api.meetup.com/${groupUrlName}/events?desc=true&page=5&status=past`){
       return Promise.resolve({json:()=>Promise.resolve([ eventDataPast ])});
